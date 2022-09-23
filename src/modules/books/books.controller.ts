@@ -30,9 +30,10 @@ export class BooksController {
   @Delete(":id")
   async delete(@Param("id") id: BookDTO['id']) {
     let response = {
-      
+      "livro": (this.booksService.delete(id)),
+      "mensagem": "Foi deletado com sucesso"
     }
-    return {`${this.booksService.delete(id)}`
+    return response
   }
 }
-}
+
