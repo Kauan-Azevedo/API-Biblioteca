@@ -64,7 +64,24 @@ export class BooksService {
         return await this.prisma.book.findFirst({
             where: {
                 id,
-            }
-        })
+            },
+        });
+    }
+
+    async delete(id: BookDTO['id']) {
+        const bookExists = await this.prisma.book.findUnique({
+            where: {
+                id,
+            },
+        });
+        if (!bookExists) {
+            throw new Error("Book does not exists!");
+        }
+
+        return await this.prisma.book.delete({
+            where: {
+                id,
+            },
+        });
     }
 }
