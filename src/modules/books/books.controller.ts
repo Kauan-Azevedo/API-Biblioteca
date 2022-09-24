@@ -1,39 +1,50 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { BookDTO } from './books.dto';
 import { BooksService } from './books.service';
 
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) { }
+  constructor(private readonly booksService: BooksService) {}
 
   @Post()
   async create(@Body() data: BookDTO) {
-    return this.booksService.create(data)
+    return this.booksService.create(data);
   }
 
   @Get()
   async findAll() {
     return this.booksService.findAll();
   }
+  @Get(':title')
+  async findByName(@Param('title') title: BookDTO['title']) {
+    return this.booksService.findByName(title);
+  }
 
-  @Put(":id")
-  async update(@Param("id") id: BookDTO['id'], @Body() data: BookDTO) {
+  @Put(':id')
+  async update(@Param('id') id: BookDTO['id'], @Body() data: BookDTO) {
     return this.booksService.update(id, data);
   }
 
   // Kauan
-  @Get(":id")
-  async read(@Param("id") id: BookDTO['id']) {
-    return this.booksService.read(id)
+  @Get(':id')
+  async read(@Param('id') id: BookDTO['id']) {
+    return this.booksService.read(id);
   }
 
-  @Delete(":id")
-  async delete(@Param("id") id: BookDTO['id']) {
+  @Delete(':id')
+  async delete(@Param('id') id: BookDTO['id']) {
     let response = {
-      "livro": (this.booksService.delete(id)),
-      "mensagem": "Foi deletado com sucesso"
-    }
-    return response
+      livro: this.booksService.delete(id),
+      mensagem: 'Foi deletado com sucesso',
+    };
+    return response;
   }
 }
-

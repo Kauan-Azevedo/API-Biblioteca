@@ -5,83 +5,97 @@ import { BookDTO } from './books.dto';
 
 @Injectable()
 export class BooksService {
+  constructor(private prisma: PrismaService) {}
 
-    constructor(private prisma: PrismaService) { }
+  async create(data: BookDTO) {
+    const bookExists = await this.prisma.book.findFirst({
+      where: {
+        bar_code: data.bar_code,
+      },
+    });
 
-    async create(data: BookDTO) {
-        const bookExists = await this.prisma.book.findFirst({
-            where: {
-                bar_code: data.bar_code
-            }
-        })
-
-        if (bookExists) {
-            throw new Error("Book already exists")
-        }
-
-        const book = await this.prisma.book.create({
-            data,
-        });
-
-        return book;
+    if (bookExists) {
+      throw new Error('Book already exists');
     }
 
-    async findAll() {
-        return this.prisma.book.findMany();
+    const book = await this.prisma.book.create({
+      data,
+    });
+
+    return book;
+  }
+
+  async findAll() {
+    return this.prisma.book.findMany();
+  }
+
+  async findByName(title: BookDTO['title']) {
+    const bookExists = await this.prisma.book.findUnique({
+      where: {
+        title,
+      },
+    });
+    if (!bookExists) {
+      throw new Error('Book dont exists');
+    }
+    return await this.prisma.book.findFirst({
+      where: {
+        title,
+      },
+    });
+  }
+
+  async update(id: BookDTO['id'], data: BookDTO) {
+    const bookExists = await this.prisma.book.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!bookExists) {
+      throw new Error('Book does not exists!');
     }
 
-    async update(id: BookDTO['id'], data: BookDTO) {
-        const bookExists = await this.prisma.book.findUnique({
-            where: {
-                id,
-            },
-        });
+    return await this.prisma.book.update({
+      data,
+      where: {
+        id,
+      },
+    });
+  }
 
-        if (!bookExists) {
-            throw new Error("Book does not exists!");
-        }
-
-        return await this.prisma.book.update({
-            data,
-            where: {
-                id,
-            }
-        })
-
+  // Kauan
+  async read(id: BookDTO['id']) {
+    const bookExists = await this.prisma.book.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!bookExists) {
+      throw new Error('Book does not exists!');
     }
 
-    // Kauan
-    async read(id: BookDTO['id']) {
-        const bookExists = await this.prisma.book.findUnique({
-            where: {
-                id,
-            },
-        });
-        if (!bookExists) {
-            throw new Error("Book does not exists!");
-        }
+    return await this.prisma.book.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
 
-        return await this.prisma.book.findFirst({
-            where: {
-                id,
-            },
-        });
+  async delete(id: BookDTO['id']) {
+    const bookExists = await this.prisma.book.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!bookExists) {
+      throw new Error('Book does not exists!');
     }
 
-    async delete(id: BookDTO['id']) {
-        const bookExists = await this.prisma.book.findUnique({
-            where: {
-                id,
-            },
-        });
-        if (!bookExists) {
-            throw new Error("Book does not exists!");
-        }
-
-        return await this.prisma.book.delete({
-            where: {
-                id,
-            },
-        });
-    }
+    return await this.prisma.book.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
