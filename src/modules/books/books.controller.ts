@@ -14,29 +14,30 @@ import { BooksService } from './books.service';
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
+  // Kauan
+  @Get()
+  async findAll() {
+    return this.booksService.findAll();
+  }
+
+  @Get('byId/:id')
+  async read(@Param('id') id: BookDTO['id']) {
+    return this.booksService.read(id);
+  }
+
+  @Get('byTitle/:title')
+  async findByName(@Param('title') title: BookDTO['title']) {
+    return this.booksService.findByName(title);
+  }
+
   @Post()
   async create(@Body() data: BookDTO) {
     return this.booksService.create(data);
   }
 
-  @Get()
-  async findAll() {
-    return this.booksService.findAll();
-  }
-  @Get(':title')
-  async findByName(@Param('title') title: BookDTO['title']) {
-    return this.booksService.findByName(title);
-  }
-
   @Put(':id')
   async update(@Param('id') id: BookDTO['id'], @Body() data: BookDTO) {
     return this.booksService.update(id, data);
-  }
-
-  // Kauan
-  @Get(':id')
-  async read(@Param('id') id: BookDTO['id']) {
-    return this.booksService.read(id);
   }
 
   @Delete(':id')
