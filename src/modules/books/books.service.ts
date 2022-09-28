@@ -5,7 +5,7 @@ import { BookDTO } from './books.dto';
 
 @Injectable()
 export class BooksService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(data: BookDTO) {
     const bookExists = await this.prisma.book.findFirst({
@@ -15,7 +15,7 @@ export class BooksService {
     });
 
     if (bookExists) {
-      throw new Error('Book already exists');
+      throw new Error('Livro já existente!');
     }
 
     const book = await this.prisma.book.create({
@@ -36,7 +36,7 @@ export class BooksService {
       },
     });
     if (!bookExists) {
-      throw new Error('Book dont exists');
+      throw new Error('Livro não existe');
     }
     return await this.prisma.book.findFirst({
       where: {
@@ -53,7 +53,7 @@ export class BooksService {
     });
 
     if (!bookExists) {
-      throw new Error('Book does not exists!');
+      throw new Error('Livro não existe');
     }
 
     return await this.prisma.book.update({
@@ -72,7 +72,7 @@ export class BooksService {
       },
     });
     if (!bookExists) {
-      throw new Error('Book does not exists!');
+      throw new Error('Livro não existe');
     }
 
     return await this.prisma.book.findFirst({
@@ -89,7 +89,7 @@ export class BooksService {
       },
     });
     if (!bookExists) {
-      throw new Error('Book does not exists!');
+      throw new Error('Livro não existe');
     }
 
     return await this.prisma.book.delete({
