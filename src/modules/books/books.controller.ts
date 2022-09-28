@@ -12,7 +12,7 @@ import { BooksService } from './books.service';
 
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(private readonly booksService: BooksService) { }
 
   // Kauan
   @Get()
@@ -42,10 +42,8 @@ export class BooksController {
 
   @Delete(':id')
   async delete(@Param('id') id: BookDTO['id']) {
-    let response = {
-      livro: this.booksService.delete(id),
-      mensagem: 'Foi deletado com sucesso',
-    };
+    let response = `O livro de id: ${id}\nFoi deletado com sucesso!`
+
     return response;
   }
 }
