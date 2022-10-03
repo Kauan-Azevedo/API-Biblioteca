@@ -1,5 +1,5 @@
 # 🎉 Projeto
-* primeiro projeto de aprendizado usando NestJs contento um CRUD de api.
+* primeiro projeto visando o aprendizado usando NestJs contento um CRUD de api.
 
 ## ✨ Sobre
   Projeto de API com um CRUD se baseando em um tema de livraria, onde é possivel adicionar, ver, atualizar e deletar livros.
