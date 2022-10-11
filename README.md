@@ -44,5 +44,5 @@ URL base(http://localhost:3000):
     * ```/books/{id}```
 
 ## 🌱 Como iniciar?
-* Para iniciar o projeto será necessário ter o node, para que em seguida usar o comando: ```npm install``` e em seguida ```npm run start:dev```
+* Para iniciar o projeto será necessário ter o node, para que em seguida usar o comando: ```npm install``` e por ultimo ```npm run start:dev```
 
