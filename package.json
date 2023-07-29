@@ -1,5 +1,5 @@
 {
-  "name": "CRUD-rest",
+  "name": "biblioteca-nest",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -26,6 +26,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.3.1",
+    "dotenv": "^16.3.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
